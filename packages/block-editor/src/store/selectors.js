@@ -1478,7 +1478,7 @@ export const getInserterItems = createSelector(
 				name: blockType.name,
 				initialAttributes: {},
 				title: blockType.title,
-				description: blockType.description,
+				description: 'hello theasd fasdf ', //blockType.description,
 				icon: blockType.icon,
 				category: blockType.category,
 				keywords: blockType.keywords,

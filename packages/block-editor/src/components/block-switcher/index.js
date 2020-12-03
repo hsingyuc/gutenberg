@@ -17,6 +17,7 @@ import {
 } from '@wordpress/components';
 import {
 	getBlockType,
+	__experimentalGetBlockTypeWithVariationInfo as getBlockTypeWithVariationInfo,
 	getPossibleBlockTransformations,
 	switchToBlockType,
 	cloneBlock,
@@ -120,8 +121,12 @@ export class BlockSwitcher extends Component {
 
 		let icon;
 		if ( isSelectionOfSameType ) {
-			const sourceBlockName = hoveredBlock.name;
-			const blockType = getBlockType( sourceBlockName );
+			// const sourceBlockName = hoveredBlock.name;
+			// const blockType = getBlockType( sourceBlockName );
+			const blockType = getBlockTypeWithVariationInfo(
+				hoveredBlock.name,
+				hoveredBlock.attributes
+			);
 			icon = blockType.icon;
 		} else {
 			icon = stack;
@@ -246,6 +251,7 @@ export default compose(
 		const blocks = getBlocksByClientId( clientIds );
 		const firstBlock = blocks && blocks.length === 1 ? blocks[ 0 ] : null;
 		const styles = firstBlock && getBlockStyles( firstBlock.name );
+
 		return {
 			blocks,
 			inserterItems: getInserterItems( rootClientId ),

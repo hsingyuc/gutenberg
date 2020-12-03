@@ -414,6 +414,14 @@ export function getBlockTypes() {
 	return select( blocksStore ).getBlockTypes();
 }
 
+// TODO jsdoc
+export function getBlockTypeWithVariationInfo( name, attributes ) {
+	return select( blocksStore ).getBlockTypeWithVariationInfo(
+		name,
+		attributes
+	);
+}
+
 /**
  * Returns the block support value for a feature, if defined.
  *

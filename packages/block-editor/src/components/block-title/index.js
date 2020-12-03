@@ -8,7 +8,7 @@ import { truncate } from 'lodash';
  */
 import { useSelect } from '@wordpress/data';
 import {
-	getBlockType,
+	__experimentalGetBlockTypeWithVariationInfo as getBlockTypeWithVariationInfo,
 	__experimentalGetBlockLabel as getBlockLabel,
 } from '@wordpress/blocks';
 
@@ -30,15 +30,14 @@ import {
 export default function BlockTitle( { clientId } ) {
 	const { attributes, name } = useSelect(
 		( select ) => {
-			if ( ! clientId ) {
-				return {};
-			}
-			const { getBlockName, getBlockAttributes } = select(
+			const { __unstableGetBlockWithoutInnerBlocks } = select(
 				'core/block-editor'
 			);
+			const { name: _name, attributes: _attributes } =
+				__unstableGetBlockWithoutInnerBlocks( clientId ) || {};
 			return {
-				attributes: getBlockAttributes( clientId ),
-				name: getBlockName( clientId ),
+				attributes: _attributes,
+				name: _name,
 			};
 		},
 		[ clientId ]
@@ -48,7 +47,7 @@ export default function BlockTitle( { clientId } ) {
 		return null;
 	}
 
-	const blockType = getBlockType( name );
+	const blockType = getBlockTypeWithVariationInfo( name, attributes );
 	if ( ! blockType ) {
 		return null;
 	}

@@ -43,6 +43,7 @@ export {
 	getGroupingBlockName,
 	getBlockType,
 	getBlockTypes,
+	getBlockTypeWithVariationInfo as __experimentalGetBlockTypeWithVariationInfo,
 	getBlockSupport,
 	hasBlockSupport,
 	getBlockVariations,
