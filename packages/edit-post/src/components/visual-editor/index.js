@@ -61,21 +61,18 @@ export default function VisualEditor() {
 		<div className="edit-post-visual-editor">
 			<VisualEditorGlobalKeyboardShortcuts />
 			<Popover.Slot name="block-toolbar" />
-			<div
+			<WritingFlow
 				ref={ ref }
 				className="editor-styles-wrapper"
-				tabIndex="-1"
 				style={ resizedCanvasStyles || desktopCanvasStyles }
 			>
-				<WritingFlow>
-					{ ! isTemplateMode && (
-						<div className="edit-post-visual-editor__post-title-wrapper">
-							<PostTitle />
-						</div>
-					) }
-					<BlockList />
-				</WritingFlow>
-			</div>
+				{ ! isTemplateMode && (
+					<div className="edit-post-visual-editor__post-title-wrapper">
+						<PostTitle />
+					</div>
+				) }
+				<BlockList />
+			</WritingFlow>
 			<__experimentalBlockSettingsMenuFirstItem>
 				{ ( { onClose } ) => (
 					<BlockInspectorButton onClick={ onClose } />

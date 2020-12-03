@@ -7,7 +7,7 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { useRef, useEffect, useState } from '@wordpress/element';
+import { useRef, useEffect, useState, forwardRef } from '@wordpress/element';
 import {
 	computeCaretRect,
 	focus,
@@ -233,18 +233,13 @@ function selector( select ) {
 	};
 }
 
-/**
- * Handles selection and navigation across blocks. This component should be
- * wrapped around BlockList.
- *
- * @param {Object}    props          Component properties.
- * @param {WPElement} props.children Children to be rendered.
- */
-export default function WritingFlow( { children } ) {
-	const container = useRef();
+export function WritingFlow( { children, className, style }, container ) {
+	const fallbackRef = useRef();
 	const focusCaptureBeforeRef = useRef();
 	const focusCaptureAfterRef = useRef();
 	const multiSelectionContainer = useRef();
+
+	container = container || fallbackRef;
 
 	const entirelySelected = useRef();
 
@@ -677,7 +672,7 @@ export default function WritingFlow( { children } ) {
 		}
 	}, [ hasMultiSelection, isMultiSelecting ] );
 
-	const className = classnames( 'block-editor-writing-flow', {
+	className = classnames( className, 'block-editor-writing-flow', {
 		'is-navigate-mode': isNavigationMode,
 		'is-block-moving-mode': !! hasBlockMovingClientId(),
 		'can-insert-moving-block': canInsertMovingBlock,
@@ -699,6 +694,7 @@ export default function WritingFlow( { children } ) {
 			<div
 				ref={ container }
 				className={ className }
+				style={ style }
 				onKeyDown={ onKeyDown }
 				onMouseDown={ onMouseDown }
 			>
@@ -729,3 +725,12 @@ export default function WritingFlow( { children } ) {
 	);
 	/* eslint-enable jsx-a11y/no-static-element-interactions */
 }
+
+/**
+ * Handles selection and navigation across blocks. This component should be
+ * wrapped around BlockList.
+ *
+ * @param {Object}    props          Component properties.
+ * @param {WPElement} props.children Children to be rendered.
+ */
+export default forwardRef( WritingFlow );
