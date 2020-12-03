@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import { Text } from 'react-native';
-
-/**
  * WordPress dependencies
  */
 import { View } from '@wordpress/primitives';
@@ -14,6 +9,7 @@ import {
 	withNotices,
 	ToolbarButton,
 	ToolbarGroup,
+	AudioPlayer,
 } from '@wordpress/components';
 import {
 	BlockControls,
@@ -126,16 +122,12 @@ function AudioEdit( {
 				onFinishMediaUploadWithSuccess={ onFileChange }
 				onFinishMediaUploadWithFailure={ onError }
 				onMediaUploadStateReset={ onFileChange }
-				renderContent={ ( { isUploadInProgress, isUploadFailed } ) => {
+				renderContent={ () => {
 					return (
 						<View>
 							{ getBlockControls( open ) }
 							{ getMediaOptions() }
-							<Text>
-								⏯ Audio Player goes here.{ ' ' }
-								{ isUploadInProgress && 'Uploading...' }
-								{ isUploadFailed && 'ERROR' }
-							</Text>
+							<AudioPlayer />
 							{ ( ! RichText.isEmpty( caption ) ||
 								isSelected ) && (
 								<RichText
